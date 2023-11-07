@@ -1,8 +1,12 @@
 let recordedEvents = [];
 let switchRecord = 0;
+let startTime = 0;
 const drumKitKeys = ["KeyQ", "KeyW", "KeyE", "KeyA", "KeyS", "KeyD", "KeyZ", "KeyX", "KeyC"];
 const recordBtn = document.querySelector('#record-btn');
+const stopBtn = document.querySelector('#stop-record-btn');
 const playRecordBtn = document.querySelector('#play-btn');
+const timerElement = document.querySelector('#timer');
+
 
 document.addEventListener("DOMContentLoaded", function () {
     function playSound(event) {
@@ -21,17 +25,22 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     recordBtn.addEventListener("click", () => {
+        if (switchRecord == 0) {
+            recordedEvents = [];
+            document.addEventListener("keydown", recordKeyEvent);
+            document.addEventListener("keyup", recordKeyEvent);
+            switchRecord = 1;
+            startTimer();
+        }
+    });
+
+    stopBtn.addEventListener("click", () => {
         if (switchRecord == 1) {
             document.removeEventListener("keydown", recordKeyEvent);
             document.removeEventListener("keyup", recordKeyEvent);
             switchRecord = 0;
-            return;
+            stopTimer();
         }
-
-        recordedEvents = [];
-        document.addEventListener("keydown", recordKeyEvent);
-        document.addEventListener("keyup", recordKeyEvent);
-        switchRecord = 1;
     });
 
     function recordKeyEvent(event) {
@@ -70,5 +79,27 @@ document.addEventListener("DOMContentLoaded", function () {
                 window.dispatchEvent(keyEvent)
             }, timeStamp);
         }
+    }
+
+    function startTimer() {
+        startTime = new Date().getTime();
+        intervalId = setInterval(updateTimer, 1000);
+        timerElement.classList.add("recording");
+    }
+
+    function stopTimer() {
+        clearInterval(intervalId);
+        timerElement.classList.remove("recording");
+        timerElement.classList.add("no-recording");
+        timerElement.textContent = "00:00:00";
+    }
+
+    function updateTimer() {
+        const currentTime = new Date().getTime();
+        const elapsedTime = new Date(currentTime - startTime);
+        const hours = String(elapsedTime.getUTCHours()).padStart(2, "0");
+        const minutes = String(elapsedTime.getUTCMinutes()).padStart(2, "0");
+        const seconds = String(elapsedTime.getUTCSeconds()).padStart(2, "0");
+        timerElement.textContent = `${hours}:${minutes}:${seconds}`;
     }
 });
