@@ -6,10 +6,14 @@ const recordBtn = document.querySelector('#record-btn');
 const stopBtn = document.querySelector('#stop-record-btn');
 const playRecordBtn = document.querySelector('#play-btn');
 const timerElement = document.querySelector('#timer');
+const timerContainer = document.querySelector('.timer-container');
 
 
 document.addEventListener("DOMContentLoaded", function () {
     function playSound(event) {
+        if (!drumKitKeys.includes(event.code)) {
+            return;
+        }
         let activeKey = document.querySelector(`div[data-key="${event.code}"]`);
         let sound = document.querySelector(`audio[data-key="${event.code}"]`);
         sound.cloneNode(true).play();
@@ -19,6 +23,9 @@ document.addEventListener("DOMContentLoaded", function () {
     window.addEventListener("keydown", playSound);
 
     window.addEventListener("keyup", (event) => {
+        if (!drumKitKeys.includes(event.code)) {
+            return;
+        }
         let key = document.querySelector(`div[data-key="${event.code}"]`);
         key.classList.remove("playing");
     });
@@ -84,13 +91,13 @@ document.addEventListener("DOMContentLoaded", function () {
     function startTimer() {
         startTime = new Date().getTime();
         intervalId = setInterval(updateTimer, 1000);
-        timerElement.classList.add("recording");
+        timerContainer.classList.add("recording");
     }
 
     function stopTimer() {
         clearInterval(intervalId);
-        timerElement.classList.remove("recording");
-        timerElement.classList.add("no-recording");
+        timerContainer.classList.remove("recording");
+        timerContainer.classList.add("no-recording");
         timerElement.textContent = "00:00:00";
     }
 
