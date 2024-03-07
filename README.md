@@ -1,10 +1,12 @@
 # DrumPad 🥁
 
-Welcome to DrumPad, a web-based drum pad application that lets you unleash your inner drummer! 🚀
+Welcome to DrumPad, a web-based drum pad application that lets you unleash your inner drummer! 🚀<br>
+Check out live : [DrumPad](https://drumpad.evgenii.fr/) 🌐
 
 <p align="center">
-  <img src="https://i.imgur.com/5PkOAUL.gif" alt="Drumpad preview"/>
+  <img src="https://raw.githubusercontent.com/enypy/ReadMeAssetsVault/main/DrumPad/main.gif" alt="Drumpad preview"/>
 </p>
+
 
 ## Introduction 🥁
 DrumPad is a web application developed as a practice project for asynchronous functions in JavaScript. It provides a virtual drum pad interface where each button triggers a unique drum sound. Additionally, DrumPad offers recording functionality, allowing you to create and replay your rhythmic masterpieces.
